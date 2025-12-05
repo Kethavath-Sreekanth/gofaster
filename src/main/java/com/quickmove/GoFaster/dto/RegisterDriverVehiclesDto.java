@@ -3,36 +3,37 @@ package com.quickmove.GoFaster.dto;
 public class RegisterDriverVehiclesDto
 {
 	private int licenceNo;
-	private int upiid;
-	private String drivername;
+	private int upiId;
+	private String driverName;
 	private int age;
-	private long moubilenumber;
+	private long mobileNumber;
 	private Character gender;
-	private String mailid;
-	private String vehiclename;
-	private int vehicleno;
-	private String vehicletype;
+	private String mailId;
+	private String vehicleName;
+	private int vehicleNo;
+	private String vehicleType;
 	private int vehicles;
-	private String vehiclecapacity;
+	private String vehicleCapacity;
 	private double latitude;
 	private double longitude;
+	private String pricePerKm;
 	public int getLicenceNo() {
 		return licenceNo;
 	}
 	public void setLicenceNo(int licenceNo) {
 		this.licenceNo = licenceNo;
 	}
-	public int getUpiid() {
-		return upiid;
+	public int getUpiId() {
+		return upiId;
 	}
-	public void setUpiid(int upiid) {
-		this.upiid = upiid;
+	public void setUpiId(int upiId) {
+		this.upiId = upiId;
 	}
-	public String getDrivername() {
-		return drivername;
+	public String getDriverName() {
+		return driverName;
 	}
-	public void setDrivername(String drivername) {
-		this.drivername = drivername;
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 	public int getAge() {
 		return age;
@@ -40,11 +41,11 @@ public class RegisterDriverVehiclesDto
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public long getMoubilenumber() {
-		return moubilenumber;
+	public long getMobileNumber() {
+		return mobileNumber;
 	}
-	public void setMoubilenumber(long moubilenumber) {
-		this.moubilenumber = moubilenumber;
+	public void setMobileNumber(long mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	public Character getGender() {
 		return gender;
@@ -52,29 +53,29 @@ public class RegisterDriverVehiclesDto
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
-	public String getMailid() {
-		return mailid;
+	public String getMailId() {
+		return mailId;
 	}
-	public void setMailid(String mailid) {
-		this.mailid = mailid;
+	public void setMailId(String mailId) {
+		this.mailId = mailId;
 	}
-	public String getVehiclename() {
-		return vehiclename;
+	public String getVehicleName() {
+		return vehicleName;
 	}
-	public void setVehiclename(String vehiclename) {
-		this.vehiclename = vehiclename;
+	public void setVehicleName(String vehicleName) {
+		this.vehicleName = vehicleName;
 	}
-	public int getVehicleno() {
-		return vehicleno;
+	public int getVehicleNo() {
+		return vehicleNo;
 	}
-	public void setVehicleno(int vehicleno) {
-		this.vehicleno = vehicleno;
+	public void setVehicleNo(int vehicleNo) {
+		this.vehicleNo = vehicleNo;
 	}
-	public String getVehicletype() {
-		return vehicletype;
+	public String getVehicleType() {
+		return vehicleType;
 	}
-	public void setVehicletype(String vehicletype) {
-		this.vehicletype = vehicletype;
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
 	}
 	public int getVehicles() {
 		return vehicles;
@@ -82,11 +83,11 @@ public class RegisterDriverVehiclesDto
 	public void setVehicles(int vehicles) {
 		this.vehicles = vehicles;
 	}
-	public String getVehiclecapacity() {
-		return vehiclecapacity;
+	public String getVehicleCapacity() {
+		return vehicleCapacity;
 	}
-	public void setVehiclecapacity(String vehiclecapacity) {
-		this.vehiclecapacity = vehiclecapacity;
+	public void setVehicleCapacity(String vehicleCapacity) {
+		this.vehicleCapacity = vehicleCapacity;
 	}
 	public double getLatitude() {
 		return latitude;
@@ -100,34 +101,43 @@ public class RegisterDriverVehiclesDto
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public RegisterDriverVehiclesDto(int licenceNo, int upiid, String drivername, int age, long moubilenumber,
-			Character gender, String mailid, String vehiclename, int vehicleno, String vehicletype, int vehicles,
-			String vehiclecapacity, double latitude, double longitude) {
+	public String getPricePerKm() {
+		return pricePerKm;
+	}
+	public void setPricePerKm(String pricePerKm) {
+		this.pricePerKm = pricePerKm;
+	}
+	public RegisterDriverVehiclesDto(int licenceNo, int upiId, String driverName, int age, long mobileNumber,
+			Character gender, String mailId, String vehicleName, int vehicleNo, String vehicleType, int vehicles,
+			String vehicleCapacity, double latitude, double longitude, String pricePerKm) {
 		super();
 		this.licenceNo = licenceNo;
-		this.upiid = upiid;
-		this.drivername = drivername;
+		this.upiId = upiId;
+		this.driverName = driverName;
 		this.age = age;
-		this.moubilenumber = moubilenumber;
+		this.mobileNumber = mobileNumber;
 		this.gender = gender;
-		this.mailid = mailid;
-		this.vehiclename = vehiclename;
-		this.vehicleno = vehicleno;
-		this.vehicletype = vehicletype;
+		this.mailId = mailId;
+		this.vehicleName = vehicleName;
+		this.vehicleNo = vehicleNo;
+		this.vehicleType = vehicleType;
 		this.vehicles = vehicles;
-		this.vehiclecapacity = vehiclecapacity;
+		this.vehicleCapacity = vehicleCapacity;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.pricePerKm = pricePerKm;
 	}
 	public RegisterDriverVehiclesDto() {
 		super();
 	}
 	@Override
 	public String toString() {
-		return "RegisterDriverVehiclesDTO [licenceNo=" + licenceNo + ", upiid=" + upiid + ", drivername=" + drivername
-				+ ", age=" + age + ", moubilenumber=" + moubilenumber + ", gender=" + gender + ", mailid=" + mailid
-				+ ", vehiclename=" + vehiclename + ", vehicleno=" + vehicleno + ", vehicletype=" + vehicletype
-				+ ", vehicles=" + vehicles + ", vehiclecapacity=" + vehiclecapacity + ", latitude=" + latitude
-				+ ", longitude=" + longitude + "]";
+		return "RegisterDriverVehiclesDto [licenceNo=" + licenceNo + ", upiId=" + upiId + ", driverName=" + driverName
+				+ ", age=" + age + ", mobileNumber=" + mobileNumber + ", gender=" + gender + ", mailId=" + mailId
+				+ ", vehicleName=" + vehicleName + ", vehicleNo=" + vehicleNo + ", vehicleType=" + vehicleType
+				+ ", vehicles=" + vehicles + ", vehicleCapacity=" + vehicleCapacity + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", pricePerKm=" + pricePerKm + "]";
 	}
+	
+	 
 }
