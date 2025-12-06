@@ -30,7 +30,7 @@ public class DriverController {
 	        }
 	    
 	    @GetMapping("/driver")
-	    public  ResponseStructure<Driver>findDriver(@RequestParam long mobileNo){
+	    public  ResponseStructure<Driver> findDriver(@RequestParam long mobileNo){
 	    	return driverService.findDriver(mobileNo);	
 	    }
 
