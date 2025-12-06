@@ -1,17 +1,11 @@
 package com.quickmove.GoFaster.entity;
 
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -24,13 +18,19 @@ public class Driver {
 	    private String name;
 	    private String status="Available";
 	    private int age;
-	    private String mobileNo;
+	    private Long mobileNo;
 	    private String gender;
 	    private String mailId;
-	    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
-	    @JsonManagedReference
+	    private double latitude;
+	    private double longitude;
+	    private String currentAddress;
+
+	    
+	    @OneToOne(cascade = CascadeType.ALL)
 	    private Vehicle vehicle;
 
+	    
+	    
 	    public Long getId() {
 			return id;
 		}
@@ -67,10 +67,10 @@ public class Driver {
 		public void setAge(int age) {
 			this.age = age;
 		}
-		public String getMobileNo() {
+		public Long getMobileNo() {
 			return mobileNo;
 		}
-		public void setMobileNo(String mobileNo) {
+		public void setMobileNo(Long mobileNo) {
 			this.mobileNo = mobileNo;
 		}
 		public String getGender() {
@@ -91,13 +91,30 @@ public class Driver {
 		public void setVehicle(Vehicle vehicle) {
 			this.vehicle = vehicle;
 		}
-
-		
-		
-		public Driver(Long id, String licenceNo, String upiId, String name, String status, int age, String mobileNo,
-				String gender, String mailId, Vehicle vehicle) {
+        public double getLatitude() {
+			return latitude;
+		}
+		public void setLatitude(double latitude) {
+			this.latitude = latitude;
+		}
+		public double getLongitude() {
+			return longitude;
+		}
+		public void setLongitude(double longitude) {
+			this.longitude = longitude;
+		}
+		public String getCurrentAddress() {
+			return currentAddress;
+		}
+		public void setCurrentAddress(String currentAddress) {
+			this.currentAddress = currentAddress;
+		}
+	
+		public Driver(Long id, String licenceNo, String upiId, String name, String status, int age, Long mobileNo,
+				String gender, String mailId, double latitude, double longitude, String currentAddress,
+				Vehicle vehicle) {
 			super();
-			
+			this.id = id;
 			this.licenceNo = licenceNo;
 			this.upiId = upiId;
 			this.name = name;
@@ -106,6 +123,9 @@ public class Driver {
 			this.mobileNo = mobileNo;
 			this.gender = gender;
 			this.mailId = mailId;
+			this.latitude = latitude;
+			this.longitude = longitude;
+			this.currentAddress = currentAddress;
 			this.vehicle = vehicle;
 		}
 		public Driver() {
@@ -115,6 +135,8 @@ public class Driver {
 		public String toString() {
 			return "Driver [id=" + id + ", licenceNo=" + licenceNo + ", upiId=" + upiId + ", name=" + name + ", status="
 					+ status + ", age=" + age + ", mobileNo=" + mobileNo + ", gender=" + gender + ", mailId=" + mailId
+					+ ", latitude=" + latitude + ", longitude=" + longitude + ", currentAddress=" + currentAddress
 					+ ", vehicle=" + vehicle + "]";
 		}
+		
 }

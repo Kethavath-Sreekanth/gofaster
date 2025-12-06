@@ -1,47 +1,34 @@
 package com.quickmove.GoFaster.entity;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Vehicle {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
-	    private String name;
+	    private String vehicleName;
 	    private String vehicleNo;
-	    private String type;
-	    private String model;
-	    private int capacity;
-	    private String currentCity;
-	    private String availabilityStatus;
+	    private String vehicleType;
+	    private String vehicleModel;
+	    private String vehiclecapaCity;
+	    private String vehiclecurrentCity;
+	    private String vehicleavailabilityStatus;
 	    private double pricePerKm;
-	    @OneToOne
-	    @JoinColumn(name = "driver_id")   // correct FK name
-	    @JsonBackReference
-	    private Driver driver;
-
-
 		public Long getId() {
 			return id;
 		}
 		public void setId(Long id) {
 			this.id = id;
 		}
-		public String getName() {
-			return name;
+		public String getVehicleName() {
+			return vehicleName;
 		}
-		public void setName(String name) {
-			this.name = name;
+		public void setVehicleName(String vehicleName) {
+			this.vehicleName = vehicleName;
 		}
 		public String getVehicleNo() {
 			return vehicleNo;
@@ -49,35 +36,35 @@ public class Vehicle {
 		public void setVehicleNo(String vehicleNo) {
 			this.vehicleNo = vehicleNo;
 		}
-		public String getType() {
-			return type;
+		public String getVehicleType() {
+			return vehicleType;
 		}
-		public void setType(String type) {
-			this.type = type;
+		public void setVehicleType(String vehicleType) {
+			this.vehicleType = vehicleType;
 		}
-		public String getModel() {
-			return model;
+		public String getVehicleModel() {
+			return vehicleModel;
 		}
-		public void setModel(String model) {
-			this.model = model;
+		public void setVehicleModel(String vehicleModel) {
+			this.vehicleModel = vehicleModel;
 		}
-		public int getCapacity() {
-			return capacity;
+		public String getVehiclecapaCity() {
+			return vehiclecapaCity;
 		}
-		public void setCapacity(int capacity) {
-			this.capacity = capacity;
+		public void setVehiclecapaCity(String vehiclecapaCity) {
+			this.vehiclecapaCity = vehiclecapaCity;
 		}
-		public String getCurrentCity() {
-			return currentCity;
+		public String getVehiclecurrentCity() {
+			return vehiclecurrentCity;
 		}
-		public void setCurrentCity(String currentCity) {
-			this.currentCity = currentCity;
+		public void setVehiclecurrentCity(String vehiclecurrentCity) {
+			this.vehiclecurrentCity = vehiclecurrentCity;
 		}
-		public String getAvailabilityStatus() {
-			return availabilityStatus;
+		public String getVehicleavailabilityStatus() {
+			return vehicleavailabilityStatus;
 		}
-		public void setAvailabilityStatus(String availabilityStatus) {
-			this.availabilityStatus = availabilityStatus;
+		public void setVehicleavailabilityStatus(String vehicleavailabilityStatus) {
+			this.vehicleavailabilityStatus = vehicleavailabilityStatus;
 		}
 		public double getPricePerKm() {
 			return pricePerKm;
@@ -85,36 +72,29 @@ public class Vehicle {
 		public void setPricePerKm(double pricePerKm) {
 			this.pricePerKm = pricePerKm;
 		}
-		
-		public Driver getDriver() {
-			return driver;
-		}
-		public void setDriver(Driver driver) {
-			this.driver = driver;
-		}
-		
-		public Vehicle(String name, String vehicleNo, String type, String model, int capacity, String currentCity,
-				String availabilityStatus, double pricePerKm, Driver driver) {
+		public Vehicle(Long id, String vehicleName, String vehicleNo, String vehicleType, String vehicleModel,
+				String vehiclecapaCity, String vehiclecurrentCity, String vehicleavailabilityStatus,
+				double pricePerKm) {
 			super();
-			this.name = name;
+			this.id = id;
+			this.vehicleName = vehicleName;
 			this.vehicleNo = vehicleNo;
-			this.type = type;
-			this.model = model;
-			this.capacity = capacity;
-			this.currentCity = currentCity;
-			this.availabilityStatus = availabilityStatus;
+			this.vehicleType = vehicleType;
+			this.vehicleModel = vehicleModel;
+			this.vehiclecapaCity = vehiclecapaCity;
+			this.vehiclecurrentCity = vehiclecurrentCity;
+			this.vehicleavailabilityStatus = vehicleavailabilityStatus;
 			this.pricePerKm = pricePerKm;
-			this.driver = driver;
 		}
 		public Vehicle() {
 			super();
 		}
 		@Override
 		public String toString() {
-			return "Vehicle [id=" + id + ", name=" + name + ", vehicleNo=" + vehicleNo + ", type=" + type + ", model="
-					+ model + ", capacity=" + capacity + ", currentCity=" + currentCity + ", availabilityStatus="
-					+ availabilityStatus + ", pricePerKm=" + pricePerKm + ", driver=" + driver + "]";
+			return "Vehicle [id=" + id + ", vehicleName=" + vehicleName + ", vehicleNo=" + vehicleNo + ", vehicleType="
+					+ vehicleType + ", vehicleModel=" + vehicleModel + ", vehiclecapaCity=" + vehiclecapaCity
+					+ ", vehiclecurrentCity=" + vehiclecurrentCity + ", vehicleavailabilityStatus="
+					+ vehicleavailabilityStatus + ", pricePerKm=" + pricePerKm + "]";
 		}
-		
-
+	    
 }
