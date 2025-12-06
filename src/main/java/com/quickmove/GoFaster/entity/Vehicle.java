@@ -1,9 +1,16 @@
 package com.quickmove.GoFaster.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Vehicle {
@@ -18,7 +25,12 @@ public class Vehicle {
 	    private String currentCity;
 	    private String availabilityStatus;
 	    private double pricePerKm;
+	    @OneToOne
+	    @JoinColumn(name = "driver_id")   // correct FK name
+	    @JsonBackReference
 	    private Driver driver;
+
+
 		public Long getId() {
 			return id;
 		}
@@ -73,16 +85,17 @@ public class Vehicle {
 		public void setPricePerKm(double pricePerKm) {
 			this.pricePerKm = pricePerKm;
 		}
+		
 		public Driver getDriver() {
 			return driver;
 		}
 		public void setDriver(Driver driver) {
 			this.driver = driver;
 		}
-		public Vehicle(Long id, String name, String vehicleNo, String type, String model, int capacity,
-				String currentCity, String availabilityStatus, double pricePerKm, Driver driver) {
+		
+		public Vehicle(String name, String vehicleNo, String type, String model, int capacity, String currentCity,
+				String availabilityStatus, double pricePerKm, Driver driver) {
 			super();
-			this.id = id;
 			this.name = name;
 			this.vehicleNo = vehicleNo;
 			this.type = type;
@@ -102,4 +115,6 @@ public class Vehicle {
 					+ model + ", capacity=" + capacity + ", currentCity=" + currentCity + ", availabilityStatus="
 					+ availabilityStatus + ", pricePerKm=" + pricePerKm + ", driver=" + driver + "]";
 		}
+		
+
 }
