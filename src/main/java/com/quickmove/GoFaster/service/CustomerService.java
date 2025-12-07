@@ -1,11 +1,14 @@
 package com.quickmove.GoFaster.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.quickmove.GoFaster.dto.CustomerDto;
 import com.quickmove.GoFaster.entity.Customer;
+import com.quickmove.GoFaster.exception.CustomerNotFoundException;
 import com.quickmove.GoFaster.repository.CustomerRepository;
+import com.quickmove.GoFaster.util.ResponseStructure;
 
 @Service
 public class CustomerService {
@@ -19,15 +22,13 @@ public class CustomerService {
 	        c.setGender(dto.getGender());
 	        c.setMobileNo(dto.getMobileNo());
 	        c.setEmailId(dto.getEmailId());
-	        // optionally set currentLocation from lat/long -> pass as string
+	        
 	        customerRepo.save(c);
 	        return c;
 	    }
 
-		public Customer findByMobile(long mobileNo) {
-			  return customerRepo.findByMobileNo(mobileNo);
+	    
 
-		}
 
 		public boolean deleteByMobile(long mobileNo) {
 			 Customer c = customerRepo.findByMobileNo(mobileNo);

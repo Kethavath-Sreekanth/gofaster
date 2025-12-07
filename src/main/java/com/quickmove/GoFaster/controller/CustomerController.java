@@ -25,12 +25,7 @@ public class CustomerController {
         return new ResponseStructure<>(HttpStatus.CREATED.value(), "Customer registered", c);
     }
     
-    @GetMapping("/find")
-    public ResponseStructure<Customer> findCustomer(@RequestParam long mobileNo) {
-        Customer c = customerService.findByMobile(mobileNo);
-        if (c == null) return new ResponseStructure<>(HttpStatus.NOT_FOUND.value(), "Not found", null);
-        return new ResponseStructure<>(HttpStatus.FOUND.value(), "Customer found", c);
-    }
+   
     
    
     @DeleteMapping("/delete/{mobileNo}")
