@@ -10,6 +10,7 @@ import com.quickmove.GoFaster.entity.Booking;
 import com.quickmove.GoFaster.entity.Customer;
 import com.quickmove.GoFaster.entity.Driver;
 import com.quickmove.GoFaster.exception.CustomerNotFoundException;
+import com.quickmove.GoFaster.exception.DriverMobileNoNotFound;
 import com.quickmove.GoFaster.exception.DriverNotFoundException;
 import com.quickmove.GoFaster.repository.BookingRepository;
 import com.quickmove.GoFaster.repository.CustomerRepository;
@@ -36,7 +37,7 @@ public class BookingService {
             Driver driver = driverRepo.findByMobileNo(bookVehicleDto.getDriverMobileNo());
             if (driver == null) {
             	
-            	throw new DriverNotFoundException("Driver not found with mobile: " + bookVehicleDto.getDriverMobileNo());
+            	throw new DriverMobileNoNotFound();
             }
 
             Booking booking = new Booking();
