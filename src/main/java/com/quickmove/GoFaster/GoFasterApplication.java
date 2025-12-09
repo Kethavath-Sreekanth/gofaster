@@ -9,5 +9,4 @@ public class GoFasterApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GoFasterApplication.class, args);
 	}
-
 }

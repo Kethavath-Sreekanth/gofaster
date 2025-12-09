@@ -64,6 +64,9 @@ public class CustomerDto {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
+	public CustomerDto() {
+		super();
+	}
 	@Override
 	public String toString() {
 		return "CustomerDto [name=" + name + ", age=" + age + ", gender=" + gender + ", mobileNo=" + mobileNo
