@@ -58,11 +58,16 @@ public class BookingService {
 
             bookingRepo.save(booking);
             customer.getBookingList().add(booking);
-            //Vehicle vehicle= new Vehicle();
+
+           // Vehicle vehicle= new Vehicle();
             //vehicle.getDriver().getBookingList().add(booking);
             driver.getBookingList().add(booking);
             driver.setStatus("booked");
             driver.getVehicle().setVehicleavailabilityStatus("booked");
+
+            Vehicle vehicle= new Vehicle();
+           // vehicle.getDriver().getBookingList().add(booking);
+
             customerRepo.save(customer);
             driverRepo.save(driver);
 
