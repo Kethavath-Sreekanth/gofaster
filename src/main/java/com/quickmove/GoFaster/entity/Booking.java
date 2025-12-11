@@ -2,6 +2,8 @@ package com.quickmove.GoFaster.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Booking {
     private String estimatedTimeRequired;
     private LocalDateTime bookingDate;
     @ManyToOne
+    @JsonIgnore
     private Customer customer;   // Many bookings → One customer
     @ManyToOne
     private Driver driver;       // Many bookings → One driver

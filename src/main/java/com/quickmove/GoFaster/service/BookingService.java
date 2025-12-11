@@ -42,6 +42,10 @@ public class BookingService {
             }
 
             Booking booking = new Booking();
+            if(driver.getStatus().equalsIgnoreCase("booked"))
+            {
+            	throw new DriverMobileNoNotFound();
+            }
             booking.setCustomer(customer);
             booking.setDriver(driver);
             booking.setSourceLocation(bookVehicleDto.getSourceLocation());
@@ -52,8 +56,10 @@ public class BookingService {
 
             bookingRepo.save(booking);
             customer.getBookingList().add(booking);
-            Vehicle vehicle= new Vehicle();
-            vehicle.getDriver().getBookingList().add(booking);
+//            Vehicle vehicle= new Vehicle();
+//            vehicle.getDriver().getBookingList().add(booking);
+            driver.setStatus("booked");
+            driver.getVehicle().setVehicleavailabilityStatus("booked");
             customerRepo.save(customer);
             driverRepo.save(driver);
 
