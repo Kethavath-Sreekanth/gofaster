@@ -61,12 +61,13 @@ public class BookingService {
 
            // Vehicle vehicle= new Vehicle();
             //vehicle.getDriver().getBookingList().add(booking);
+            
             driver.getBookingList().add(booking);
             driver.setStatus("booked");
             driver.getVehicle().setVehicleavailabilityStatus("booked");
 
-            Vehicle vehicle= new Vehicle();
-           // vehicle.getDriver().getBookingList().add(booking);
+           // Vehicle vehicle= new Vehicle();
+            //vehicle.getDriver().getBookingList().add(booking);
 
             customerRepo.save(customer);
             driverRepo.save(driver);
@@ -76,6 +77,27 @@ public class BookingService {
              
             
         }
+
+
+		public ResponseStructure<Booking> activeBooking(long mobileNo) {
+			ResponseStructure<Booking> structure = new ResponseStructure<>();
+
+		    Booking active = bookingRepo.findActiveBooking(mobileNo);
+
+		    if (active == null) {
+		        structure.setStatuscode(404);
+		        structure.setMessage("No active booking found for this customer");
+		        structure.setData(null);
+		        return structure;
+		    }
+
+		    structure.setStatuscode(200);
+		    structure.setMessage("Active booking fetched successfully");
+		    structure.setData(active);
+
+		    return structure;
+			
+		}
     
 
     
