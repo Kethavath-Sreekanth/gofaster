@@ -98,6 +98,29 @@ public class BookingService {
 		    return structure;
 			
 		}
+
+
+		public ResponseStructure<Booking> driverActiveBooking(long mobileNo) {
+			ResponseStructure<Booking> structure = new ResponseStructure<>();
+
+		    Booking active = bookingRepo.findDriverActiveBooking(mobileNo);
+
+		    if (active == null) {
+		        structure.setStatuscode(404);
+		        structure.setMessage("No active booking found for this customer");
+		        structure.setData(null);
+		        return structure;
+		    }
+
+		    structure.setStatuscode(200);
+		    structure.setMessage("Active booking fetched successfully");
+		    structure.setData(active);
+
+		    return structure;
+			
+		
+			
+		}
     
 
     
