@@ -1,12 +1,14 @@
 package com.quickmove.GoFaster.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.quickmove.GoFaster.dto.AvailableVehicleDto;
 import com.quickmove.GoFaster.dto.ORSDistanceResponse;
 import com.quickmove.GoFaster.service.ORSService;
 import com.quickmove.GoFaster.service.VehicleService;
+import com.quickmove.GoFaster.util.ResponseStructure;
 
 @RestController
 public class VehicleController {
@@ -15,9 +17,10 @@ public class VehicleController {
    private VehicleService vehicleService;
 
     @GetMapping("/seeallavailabilityvehicle")
-    public AvailableVehicleDto seeAllAvailabilityVehicle(@RequestParam long mobileNo,@RequestParam String destinationCity) {
+    public ResponseEntity<ResponseStructure<AvailableVehicleDto>> seeAllAvailabilityVehicle(@RequestParam long mobileNo,@RequestParam String destinationCity) {
      return vehicleService.seeAllAvailabilityVehicle(mobileNo, destinationCity);
     }
+  
     
         @Autowired
         private ORSService orsService;

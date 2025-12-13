@@ -3,7 +3,11 @@ package com.quickmove.GoFaster.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.GetMapping;
+=======
+import org.springframework.http.ResponseEntity;
+>>>>>>> 437348a60618eae69343d828c90f731826be5b89
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +26,7 @@ public class BookingController {
 	 private BookingService bookingService;
 	 
 	 @PostMapping("/bookVehicle")
-	 public ResponseStructure<Booking> bookVehicle(@RequestBody BookVehicleDto bookVehicleDto) throws DriverNotFoundException, CustomerNotFoundException{
+	 public ResponseEntity<ResponseStructure<Booking>> bookVehicle(@RequestBody BookVehicleDto bookVehicleDto){
 	     return bookingService.bookVehicle(bookVehicleDto);
 	 }
 	 
