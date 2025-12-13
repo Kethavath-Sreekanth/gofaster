@@ -1,9 +1,14 @@
 package com.quickmove.GoFaster.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.quickmove.GoFaster.dto.*;
@@ -11,9 +16,12 @@ import com.quickmove.GoFaster.entity.Customer;
 import com.quickmove.GoFaster.entity.Vehicle;
 import com.quickmove.GoFaster.repository.CustomerRepository;
 import com.quickmove.GoFaster.repository.VehicleRepository;
+import com.quickmove.GoFaster.util.ResponseStructure;
 
 @Service
 public class VehicleService {
+	
+	 private static final Logger log = LoggerFactory.getLogger(VehicleService.class);
 
     @Autowired 
     private VehicleRepository vehicleRepo;
@@ -27,7 +35,7 @@ public class VehicleService {
     @Autowired 
     private ORSService orsService;
 
-    public AvailableVehicleDto seeAllAvailabilityVehicle(long mobileNo, String destinationCity) {
+    public ResponseEntity<ResponseStructure<AvailableVehicleDto>> seeAllAvailabilityVehicle(long mobileNo, String destinationCity) {
 
         // 1. Fetch customer
         Customer customer = customerRepo.findByMobileNo(mobileNo);
@@ -36,13 +44,15 @@ public class VehicleService {
         // 2. Get source city or fallback to coordinates
         String sourceCity = customer.getCurrentLocation();
         if (sourceCity == null || sourceCity.isEmpty()) {
-            // fallback: use coordinates as "lat,lon" string
             sourceCity = customer.getLatitude() + "," + customer.getLongitude();
         }
 
         // 3. Get coordinates
         double[] src = locationIQ.getCoordinates(sourceCity);
         double[] dst = locationIQ.getCoordinates(destinationCity);
+        if (src == null || dst == null) {
+            throw new RuntimeException("Invalid source or destination coordinates");
+        }
 
         // 4. Calculate distance and estimated time using ORS
         ORSDistanceResponse ors = orsService.getDistance(src[0], src[1], dst[0], dst[1]);
@@ -50,10 +60,9 @@ public class VehicleService {
         // 5. Fetch vehicles available in source city
         List<Vehicle> vehicleList = vehicleRepo.findByVehiclecurrentCityIgnoreCase(sourceCity);
         if (vehicleList == null || vehicleList.isEmpty()) {
-            System.out.println("No vehicles found in " + sourceCity + ", fetching all available vehicles");
+            log.info("No vehicles found in {}, fetching all available vehicles", sourceCity);
             vehicleList = vehicleRepo.findByVehicleavailabilityStatus("Available");
         }
-
 
         // 6. Prepare result DTO
         AvailableVehicleDto result = new AvailableVehicleDto();
@@ -84,7 +93,6 @@ public class VehicleService {
             vdto.setPricePerKm(v.getPricePerKm());
             vdto.setAverageSpeed(v.getAverageSpeed());
 
-            // Calculate fare
             double fare = Math.round(v.getPricePerKm() * ors.getDistanceKm() * 100.0) / 100.0;
 
             VehicleDetails vd = new VehicleDetails();
@@ -97,6 +105,12 @@ public class VehicleService {
 
         result.setAvailableVehicles(detailsList);
 
-        return result;
+        // 9. Wrap in ResponseStructure and return
+        ResponseStructure<AvailableVehicleDto> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.OK.value());
+        response.setMessage("Available vehicles fetched successfully");
+        response.setData(result);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

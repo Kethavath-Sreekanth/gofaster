@@ -2,6 +2,7 @@ package com.quickmove.GoFaster.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +22,17 @@ public class CustomerController {
 	    private CustomerService customerService;
 
 	    @PostMapping("/registercustomer")
-	    public ResponseStructure<Customer> register(@RequestBody CustomerDto customerDto) {
-	        return customerService.register(customerDto);
+	    public ResponseEntity<ResponseStructure<Customer>> registerCustomer(@RequestBody CustomerDto customerDto) {
+	        return customerService.registerCustomer(customerDto);
 	    }
 
 	    @GetMapping("/findcustomerwithmobileno")
-	    public ResponseStructure<Customer> findCustomer(@RequestParam long mobileNo)  {
+	    public ResponseEntity<ResponseStructure<Customer>> findCustomer(@RequestParam long mobileNo)  {
 	        return customerService.findByMobile(mobileNo);
 	    }
 
 	    @DeleteMapping("/deletecustomer/{mobileNo}")
-	    public ResponseStructure<String> deleteCustomer(@PathVariable long mobileNo) {
+	    public ResponseEntity<ResponseStructure<Customer>> deleteCustomer(@PathVariable long mobileNo) {
 	        return customerService.deleteByMobile(mobileNo);
 	    }
 

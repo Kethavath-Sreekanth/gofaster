@@ -1,6 +1,7 @@
 package com.quickmove.GoFaster.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,17 +21,17 @@ public class DriverController {
 
 	
 	    @DeleteMapping("/deletedriverwithmobileNo")
-	    public Driver deleteDriverByMobileNo(@RequestParam Long mobileNo) {
+	    public ResponseEntity<ResponseStructure<Driver>> deleteDriverByMobileNo(@RequestParam Long mobileNo) {
 	    	return driverService.deleteDriverByMobileNo(mobileNo);
 	    }
 
 	    @PutMapping("/updatecurrentvechiclelocation/{mobileNo}")
-	    public Driver updateLocation(@PathVariable Long mobileNo,@RequestBody CurrentLocationDTO locationDto) {
+	    public ResponseEntity<ResponseStructure<Driver>> updateLocation(@PathVariable Long mobileNo,@RequestBody CurrentLocationDTO locationDto) {
              return driverService.updateCurrentVehicleLocation(mobileNo, locationDto);
 	        }
 	    
 	    @GetMapping("/finddriverwithmobileno")
-	    public  ResponseStructure<Driver> findDriver(@RequestParam long mobileNo){
+	    public  ResponseEntity<ResponseStructure<Driver>> findDriver(@RequestParam long mobileNo){
 	    	return driverService.findDriver(mobileNo);	
 	    }
 

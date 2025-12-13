@@ -2,6 +2,8 @@ package com.quickmove.GoFaster.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.quickmove.GoFaster.dto.CustomerDto;
@@ -15,56 +17,63 @@ public class CustomerService {
 	 @Autowired
 	    private CustomerRepository customerRepo;
 
-	    public ResponseStructure<Customer> register(CustomerDto dto) {
+	 public ResponseEntity<ResponseStructure<Customer>> registerCustomer(CustomerDto customerDto)  {
 
 	        Customer c = new Customer();
-	        c.setName(dto.getName());
-	        c.setAge(dto.getAge());
-	        c.setGender(dto.getGender());
-	        c.setMobileNo(dto.getMobileNo());
-	        c.setEmailId(dto.getEmailId());
-	        c.setLatitude(dto.getLatitude());
-	        c.setLongitude(dto.getLongitude());
+	        c.setName(customerDto.getName());
+	        c.setAge(customerDto.getAge());
+	        c.setGender(customerDto.getGender());
+	        c.setMobileNo(customerDto.getMobileNo());
+	        c.setEmailId(customerDto.getEmailId());
+	        c.setLatitude(customerDto.getLatitude());
+	        c.setLongitude(customerDto.getLongitude());
             c.setCurrentLocation("hyderabad");
 	        customerRepo.save(c);
+	        
+	        ResponseStructure<Customer> response = new ResponseStructure<Customer>();
+	        response.setStatuscode(HttpStatus.CREATED.value());
+	        response.setMessage("Customer registered successfully");
+	        response.setData(c);
+	        
+	        return new  ResponseEntity<ResponseStructure<Customer>>(response,HttpStatus.CREATED);
+	    }    
+	 
+	 
+    public ResponseEntity<ResponseStructure<Customer>> findByMobile(long mobileNo) {
 
-	        return new ResponseStructure<>(
-	                HttpStatus.CREATED.value(),
-	                "Customer registered successfully",
-	                c
-	        );
-	    }
+		    Customer c = customerRepo.findByMobileNo(mobileNo);
 
-	    public ResponseStructure<Customer> findByMobile(long mobileNo) {
+		    if (c == null) {
+		        throw new CustomerNotFoundException("Customer not found with mobile: " + mobileNo);
+		    }
 
-	        Customer c = customerRepo.findByMobileNo(mobileNo);
+		    ResponseStructure<Customer> response = new ResponseStructure<>();
+		    response.setStatuscode(HttpStatus.OK.value());
+		    response.setMessage("Customer found successfully");
+		    response.setData(c);
 
-	        if (c == null) {
-	            throw new CustomerNotFoundException("Customer not found: " + mobileNo);
-	        }
+		    return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 
-	        return new ResponseStructure<>(
-	                HttpStatus.OK.value(),
-	                "Customer found",
-	                c
-	        );
-	    }
+	    
+	    
+	public ResponseEntity<ResponseStructure<Customer>> deleteByMobile(long mobileNo) {
 
-	    public ResponseStructure<String> deleteByMobile(long mobileNo)  {
+		    Customer c = customerRepo.findByMobileNo(mobileNo);
 
-	        Customer c = customerRepo.findByMobileNo(mobileNo);
+		    if (c == null) {
+		        throw new CustomerNotFoundException(
+		                "Customer not found with mobile: " + mobileNo);
+		    }
 
-	        if (c == null)
-	            throw new CustomerNotFoundException("Customer not found with mobile: " + mobileNo);
+		    customerRepo.delete(c);
 
-	        customerRepo.delete(c);
+		    ResponseStructure<Customer> response = new ResponseStructure<>();
+		    response.setStatuscode(HttpStatus.OK.value());
+		    response.setMessage("Customer deleted successfully");
+		    response.setData(c);
 
-	        return new ResponseStructure<>(
-	                HttpStatus.OK.value(),
-	                "Customer deleted successfully",
-	                "deleted"
-	        );
-	    }
-
+		    return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 
 }

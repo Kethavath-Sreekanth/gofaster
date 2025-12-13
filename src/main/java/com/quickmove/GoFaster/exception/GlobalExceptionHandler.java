@@ -9,25 +9,29 @@ import com.quickmove.GoFaster.util.ResponseStructure;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	
-	 @ExceptionHandler(DriverMobileNoNotFound.class)
-	    public ResponseEntity<ResponseStructure<String>> handleDriverMobileNoNotFound(DriverMobileNoNotFound dr) {
-		 ResponseStructure<String> stru = new ResponseStructure<>();
-	        stru.setStatuscode(HttpStatus.NOT_FOUND.value());
-	        stru.setMessage("Driver not found");
-	        stru.setData(dr.getMessage());
 
-	        return new ResponseEntity<>(stru, HttpStatus.NOT_FOUND);
-	    }
-	 
-	 @ExceptionHandler(DriverNotFoundException.class)
-	    public ResponseStructure<Object> handleDriverException(DriverNotFoundException ex) {
-	        return new ResponseStructure<>(404, ex.getMessage(), null);
-	    }
-	 
-	 @ExceptionHandler(CustomerNotFoundException.class)
-	    public ResponseStructure<Object> handleCustomerException(CustomerNotFoundException ex) {
-	        return new ResponseStructure<>(404, ex.getMessage(), null);
-	    }
-
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleCustomerNotFound(CustomerNotFoundException custnot) {
+        ResponseStructure<String> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.NOT_FOUND.value());
+        response.setMessage("Customer is not Found");
+        response.setData(custnot.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(DriverNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleDriverNotFound(DriverNotFoundException drivernot) {
+        ResponseStructure<String> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.NOT_FOUND.value());
+        response.setMessage("Driver is not Found");
+        response.setData(drivernot.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(DriverMobileNoNotFound.class)
+    public ResponseEntity<ResponseStructure<String>> handleDriverMobileException(DriverMobileNoNotFound drivernot) {
+        ResponseStructure<String> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.NOT_FOUND.value());
+        response.setMessage("Driver Mobile Number Not Found");
+        response.setData(drivernot.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

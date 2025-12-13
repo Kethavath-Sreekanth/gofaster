@@ -2,9 +2,11 @@ package com.quickmove.GoFaster.service;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.quickmove.GoFaster.dto.CurrentLocationDTO;
+import com.quickmove.GoFaster.entity.Customer;
 import com.quickmove.GoFaster.entity.Driver;
 import com.quickmove.GoFaster.exception.DriverMobileNoNotFound;
 import com.quickmove.GoFaster.repository.DriverRepository;
@@ -18,27 +20,42 @@ public class DriverService {
     @Autowired
     private LocationIQService locationIQService;
 
-    public Driver deleteDriverByMobileNo(Long mobileNo) {
-        Driver driver = driverRepository.findByMobileNo(mobileNo);
-        if(driver == null) {
-            throw new DriverMobileNoNotFound();
-        }
-        driverRepository.delete(driver);
-        return driver;
-    }
-    
-    public Driver updateCurrentVehicleLocation(Long mobileNo, CurrentLocationDTO locationDto) {
+    public ResponseEntity<ResponseStructure<Driver>> deleteDriverByMobileNo(Long mobileNo) {
 
         Driver driver = driverRepository.findByMobileNo(mobileNo);
 
         if (driver == null) {
-            throw new RuntimeException("Driver Not Found with mobile: " + mobileNo);
+            throw new DriverMobileNoNotFound("Driver not found with mobile: " + mobileNo);
+        }
+
+        driverRepository.delete(driver);
+
+        ResponseStructure<Driver> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.OK.value());
+        response.setMessage("Driver deleted successfully");
+        response.setData(driver);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    
+    
+
+    
+    public ResponseEntity<ResponseStructure<Driver>> updateCurrentVehicleLocation(
+            Long mobileNo, CurrentLocationDTO locationDto) {
+
+        Driver driver = driverRepository.findByMobileNo(mobileNo);
+
+        if (driver == null) {
+            throw new DriverMobileNoNotFound(
+                    "Driver not found with mobile: " + mobileNo);
         }
 
         double lat = locationDto.getLatitude();
         double lon = locationDto.getLongitude();
 
-        // Update location
+        // Update coordinates
         driver.setLatitude(lat);
         driver.setLongitude(lon);
 
@@ -46,25 +63,36 @@ public class DriverService {
         String address = locationIQService.getAddressFromCoordinates(lat, lon);
         driver.setCurrentAddress(address);
 
-        return driverRepository.save(driver);
+        Driver updatedDriver = driverRepository.save(driver);
+
+        ResponseStructure<Driver> response = new ResponseStructure<>();
+        response.setStatuscode(HttpStatus.OK.value());
+        response.setMessage("Driver location updated successfully");
+        response.setData(updatedDriver);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
+    
+    
 
-	public ResponseStructure<Driver> findDriver(long mobileNo) {
-		 Driver driver = driverRepository.findByMobileNo(mobileNo);
-		 if(driver == null) {
-	            throw new DriverMobileNoNotFound();
-	        }
-		
-		 ResponseStructure<Driver> rs =new ResponseStructure<Driver>();
-			
-			rs.setStatuscode(HttpStatus.FOUND.value());
-			rs.setMessage("Driver with monileNo " +mobileNo + "found succesfully");
-			rs.setData(driver);
-			return rs;
-	}
+    public ResponseEntity<ResponseStructure<Driver>> findDriver(long mobileNo) {
 
+        Driver driver = driverRepository.findByMobileNo(mobileNo);
+
+        if (driver == null) {
+            throw new DriverMobileNoNotFound(
+                    "Driver not found with mobile number: " + mobileNo);
+        }
+
+        ResponseStructure<Driver> rs = new ResponseStructure<>();
+        rs.setStatuscode(HttpStatus.OK.value());
+        rs.setMessage("Driver with mobileNo " + mobileNo + " found successfully");
+        rs.setData(driver);
+
+        return new ResponseEntity<>(rs, HttpStatus.OK);
+    }
 	
 }
 
