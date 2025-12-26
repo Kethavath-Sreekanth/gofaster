@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quickmove.GoFaster.dto.BookingHistoryDto;
@@ -32,6 +33,8 @@ public class CustomerService {
 	 private DriverRepository driverRepo;
 	 @Autowired
 	    private UserRepo userRepo;
+	 @Autowired
+	 private PasswordEncoder passwordEncoder;
 
 	 public ResponseEntity<ResponseStructure<Customer>> registerCustomer(CustomerDto customerDto)  {
 		 
@@ -39,8 +42,8 @@ public class CustomerService {
 	        Userr user=new Userr();
 	        user.setMobileno(customerDto.getMobileNo());
 	        user.setRole("CUSTOMER");
-	        user.setPassword(customerDto.getPassword());
-	        
+	        // 🔐 encode password
+	        user.setPassword(passwordEncoder.encode(customerDto.getPassword()));
 	        userRepo.save(user);
 	        
 	        Customer c = new Customer();
