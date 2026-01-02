@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,9 @@ import com.quickmove.GoFaster.entity.Driver;
 import com.quickmove.GoFaster.service.DriverService;
 import com.quickmove.GoFaster.util.ResponseStructure;
 @RestController
+@RequestMapping("/driver")   // ⭐ ADD THIS
 public class DriverController {
+
 	    @Autowired
 	    private DriverService driverService;
 
@@ -37,7 +40,7 @@ public class DriverController {
 	    	return driverService.findDriver(mobileNo);	
 	    }
 
-	    @GetMapping("/driver/seeallbookinghistorywithmobileno")
+	    @GetMapping("/seeallbookinghistorywithmobileno")
 	    public ResponseEntity<ResponseStructure<BookingHistoryDto>> getDriverBookingHistory(@RequestParam Long mobileNo) {
             return driverService.getDriverBookingHistoryByMobile(mobileNo);
 	    }
