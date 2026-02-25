@@ -25,11 +25,12 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/driver/**").hasRole("DRIVER")
-                .requestMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
-            )
+            	    .requestMatchers("/auth/**").permitAll()
+            	    .requestMatchers("/driver/**").hasAuthority("DRIVER")
+            	    .requestMatchers("/user/**").hasAuthority("USER")
+            	    .anyRequest().authenticated()
+            	)
+
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider);
 
