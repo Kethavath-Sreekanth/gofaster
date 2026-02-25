@@ -1,6 +1,6 @@
 package com.quickmove.GoFaster.service;
 
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;   
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,6 +71,8 @@ public class RegisterDriverVehiclesDtoService {
 	        driver.setUpiId(dto.getUpiId());
 	        driver.setLatitude(dto.getLatitude());
 	        driver.setLongitude(dto.getLongitude());
+	        String currentCity = locationIQService.getCityFromCoordinates(dto.getLatitude(), dto.getLongitude());
+	        driver.setCurrentAddress(currentCity);
 	        driver.setUser(user);
 	        driver.setVehicle(vehicle);
 

@@ -1,6 +1,6 @@
 package com.quickmove.GoFaster.security;
 
-import java.io.IOException;
+import java.io.IOException; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,8 +47,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        // Skip JWT filter for public endpoints
-        String path = request.getRequestURI();
+        String path = request.getServletPath(); // ✅ Use servlet path
         return path.startsWith("/auth/");
     }
+
 }
